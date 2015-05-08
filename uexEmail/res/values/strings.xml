@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="plugin_email_attchment_path_params_error">附件路径参数错误！</string>
+   
+</resources>
