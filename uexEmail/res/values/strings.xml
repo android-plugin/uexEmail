@@ -2,5 +2,5 @@
 <resources>
 
     <string name="plugin_email_attchment_path_params_error">附件路径参数错误！</string>
-   
+    <string name="plugin_uexEmail_select_app_to_send_email">选择发送邮件程序</string>
 </resources>

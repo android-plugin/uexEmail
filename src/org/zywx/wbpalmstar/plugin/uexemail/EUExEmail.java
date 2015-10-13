@@ -6,6 +6,8 @@ import org.zywx.wbpalmstar.engine.EBrowserView;
 import org.zywx.wbpalmstar.engine.universalex.EUExBase;
 import org.zywx.wbpalmstar.base.BUtility;
 import org.zywx.wbpalmstar.base.ResoureFinder;
+import org.zywx.wbpalmstar.engine.universalex.EUExUtil;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -75,7 +77,7 @@ public class EUExEmail extends EUExBase {
 					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
 					intent.setType("message/rfc882");
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(Intent.createChooser(intent, "选择发送邮件程序"));
+					startActivity(Intent.createChooser(intent, EUExUtil.getString("plugin_uexEmail_select_app_to_send_email")));
 				}
 			});
 		} catch (PatternSyntaxException e) {
