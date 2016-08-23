@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexEmail" version="3.0.2" build="2">
-        <info>2:新增QQ邮箱支持</info>
+        uexName="uexEmail" version="4.0.0" build="3">
+        <info>3.4.0</info>
+        <build>2:新增QQ邮箱支持</build>
         <build>1:国际化支持</build>
         <build>0:邮件功能插件</build>
     </plugin>
