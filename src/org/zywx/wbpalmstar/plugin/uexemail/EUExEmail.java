@@ -78,7 +78,6 @@ public class EUExEmail extends EUExBase {
 			final String subject = params[1];
 			final String content = params[2];
 			final String attachmentStr = params[3];
-            final String mimeType = params[4];
 			((Activity) mContext).runOnUiThread(new Runnable() {
 
 				@Override
