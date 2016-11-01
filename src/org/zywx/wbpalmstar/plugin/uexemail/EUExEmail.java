@@ -74,44 +74,41 @@ public class EUExEmail extends EUExBase {
 			return;
 		}
 		try {
-			final String receiverEmail = params[0];
-			final String subject = params[1];
-			final String content = params[2];
-			final String attachmentStr = params[3];
-			((Activity) mContext).runOnUiThread(new Runnable() {
+			String receiverEmail = params[0];
+			String subject = params[1];
+			String content = params[2];
+            String attachmentStr = null;
+            if (params.length > 3){
+                attachmentStr = params[3];
+            }
+            String[] emails = receiverEmail.split(",");
+            if (emails.length < 1) {
+                emails = new String[]{receiverEmail};
+            }
 
-				@Override
-				public void run() {
-					String[] emails = receiverEmail.split(",");
-					if (emails == null) {
-						emails = new String[] { receiverEmail };
-					}
+            String[] attachmentArray = null;
+            if (!TextUtils.isEmpty(attachmentStr)) {
+                attachmentArray = attachmentStr.split(",");
+            }
+            if (attachmentArray == null) {
+                attachmentArray = new String[]{attachmentStr};
+            }
+            Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            intent.putExtra(Intent.EXTRA_EMAIL, emails);
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            ArrayList<Uri> imageUris = new ArrayList<Uri>();
+            for (String attchment : attachmentArray) {
+                File file = getFile(attchment.trim());
+                if (file != null) {
+                    imageUris.add(Uri.fromFile(file));
+                }
+            }
+            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
+            intent.setType("application/octet-stream");
 
-					String[] attachmentArray = null;
-					if(attachmentStr!=null){
-						attachmentArray = attachmentStr.split(",");
-					}
-					if (attachmentArray == null) {
-						attachmentArray = new String[] { attachmentStr };
-					}
-					Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-					intent.putExtra(Intent.EXTRA_EMAIL, emails);
-					intent.putExtra(Intent.EXTRA_TEXT, content);
-					intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-					ArrayList<Uri> imageUris = new ArrayList<Uri>();
-					for (String attchment : attachmentArray) {
-						File file = getFile(attchment.trim());
-						if (file != null) {
-							imageUris.add(Uri.fromFile(file));
-						}
-					}
-					intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris);
-                    intent.setType("application/octet-stream");
-
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(Intent.createChooser(intent, EUExUtil.getString("plugin_uexEmail_select_app_to_send_email")));
-				}
-			});
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(Intent.createChooser(intent, EUExUtil.getString("plugin_uexEmail_select_app_to_send_email")));
 		} catch (PatternSyntaxException e) {
 			e.printStackTrace();
 		} catch (ActivityNotFoundException e) {
